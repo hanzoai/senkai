@@ -1,0 +1,10 @@
+__pycache__/
+*.egg-info/
+.venv/
+.env
+target/
+node_modules/
+*.class
+.dart_tool/
+Cargo.lock
+runs/

@@ -1,0 +1,4 @@
+import java.net.URI;
+import java.net.http.*;
+import java.time.Duration;
+public class Sekai {public static void main(String[] args)throws Exception{String key=System.getenv("HANZO_API_KEY");if(key==null)throw new IllegalStateException("Set HANZO_API_KEY");String base=System.getenv().getOrDefault("HANZO_BASE_URL","https://api.hanzo.ai/v1");var req=HttpRequest.newBuilder(URI.create(base+"/worlds")).timeout(Duration.ofSeconds(30)).header("Authorization","Bearer "+key).header("Content-Type","application/json").POST(HttpRequest.BodyPublishers.ofString("{\"model\":\"sekai-1-alpha\",\"domain\":\"simulation\"}")).build();var r=HttpClient.newHttpClient().send(req,HttpResponse.BodyHandlers.ofString());if(r.statusCode()/100!=2)throw new IllegalStateException("API status "+r.statusCode());System.out.println(r.body());}}

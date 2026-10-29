@@ -1,0 +1,3 @@
+import 'dart:io';
+import 'dart:convert';
+Future<void> main() async {final key=Platform.environment['HANZO_API_KEY'];if(key==null)throw StateError('Set HANZO_API_KEY');final base=Platform.environment['HANZO_BASE_URL']??'https://api.hanzo.ai/v1';final client=HttpClient()..connectionTimeout=const Duration(seconds:30);try{final req=await client.postUrl(Uri.parse('$base/worlds'));req.followRedirects=false;req.headers.set('Authorization','Bearer $key');req.headers.contentType=ContentType.json;req.write(jsonEncode({'model':'sekai-1-alpha','domain':'simulation'}));final r=await req.close().timeout(const Duration(seconds:30));if(r.statusCode~/100!=2)throw HttpException('API status ${r.statusCode}');print(await utf8.decoder.bind(r).join());}finally{client.close(force:true);}}

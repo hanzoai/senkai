@@ -1,0 +1,27 @@
+name: Alpha API cookbook
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  clients:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install -e .
+      - run: python -m unittest discover -s tests -v
+      - name: Check JavaScript syntax
+        run: node --check clients/javascript.mjs
+      - name: Check native client sources
+        run: |
+          gcc -fsyntax-only clients/c/main.c
+          g++ -fsyntax-only clients/cpp/main.cpp
+          javac -d /tmp/sekai-java clients/java/Sekai.java
+  rust:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dtolnay/rust-toolchain@stable
+      - run: cargo check --manifest-path clients/rust/Cargo.toml

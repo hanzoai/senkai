@@ -1,0 +1,14 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+[project]
+name = "sekai-cookbook"
+version = "0.1.0a1"
+description = "API-only client and gateway examples for Sekai-1 Alpha"
+requires-python = ">=3.11"
+license = {text = "MIT"}
+dependencies = []
+[project.optional-dependencies]
+research = ["hanzo-research>=0.3.0"]
+[tool.setuptools.packages.find]
+include = ["sekai_cookbook*"]
